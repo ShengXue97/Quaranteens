@@ -14,6 +14,27 @@ import { listTodos } from '../src/graphql/queries'
 export default function NotesScreen({ navigation, route }) {
   const [todos, setTodos] = useState([])
 
+  // Responds to coming back from the add screen
+  useEffect(() => {
+    if (route.params?.todoText) {
+      const newNote = {
+        title: route.params.todoText,
+        id: notes.length.toString(),
+        done: false,
+      };
+      setNotes([...notes, newNote]);
+      db.transaction(
+        (tx) => {
+          tx.executeSql('INSERT INTO notes (done, title) VALUES (0, ?)', [
+            route.params.todoText,
+          ]);
+        },
+        null,
+        refreshNotes
+      );
+    }
+  }, [route.params?.todoText]);
+  
   // This is to set up the top right button
   useEffect(() => {
     navigation.setOptions({
