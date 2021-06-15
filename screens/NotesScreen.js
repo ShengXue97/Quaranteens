@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   FlatList,
-  Button,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
 import { API, graphqlOperation } from 'aws-amplify'
 import { listTodos } from '../src/graphql/queries'
@@ -33,14 +32,6 @@ export default function NotesScreen({ navigation, route }) {
           />
         </TouchableOpacity>
       ),
-      headerLeft: () => (
-        <Button
-          onPress={() => {
-            navigation.navigate('Login');
-          }}
-          title="Login"
-        />
-      ),
     });
   });
 
@@ -59,7 +50,7 @@ export default function NotesScreen({ navigation, route }) {
 
 
   // The function to render each row in our FlatList
-  function renderItem({ item }) {
+  function renderItem({item}) {
     return (
       <View
         style={{
@@ -81,7 +72,7 @@ export default function NotesScreen({ navigation, route }) {
       <FlatList
         data={todos}
         renderItem={renderItem}
-        style={{ width: '100%' }}
+        style={{width: '100%'}}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
