@@ -3,3 +3,12 @@ type Todo @model {
   name: String!
   description: String
 }
+
+type Forum @model {
+  id: ID!
+  title: String!
+  content: String
+  userID: String
+  votes: Int
+  comments: [String]
+}
