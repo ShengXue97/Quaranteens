@@ -58,6 +58,12 @@ export default function AddScreen({ navigation }) {
         style={styles.textInput}
         value={formState.name}
       />
+      <Text style={{ fontSize: 24 }}>Description</Text>
+      <TextInput
+        onChangeText={val => setInput('description', val)}
+        style={styles.textInput}
+        value={formState.description}
+      />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}

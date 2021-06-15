@@ -63,6 +63,7 @@ export default function NotesScreen({ navigation, route }) {
           justifyContent: 'space-between',
         }}>
         <Text>{item.name}</Text>
+        <Text>{item.description}</Text>
       </View>
     );
   }
