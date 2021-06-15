@@ -53,7 +53,7 @@ export default function AddScreen({ navigation }) {
 
   return (
     <View style={[styles.container, { backgroundColor: "white" }]}>
-      <Text style={{ fontSize: 24 }}>What do you want to add?</Text>
+      <Text style={{ fontSize: 24 }}>Title of Diary Entry</Text>
       <TextInput
         onChangeText={val => setInput('name', val)}
         style={styles.textInput}
@@ -63,23 +63,25 @@ export default function AddScreen({ navigation }) {
       <TextInput
         onChangeText={val => setInput('description', val)}
         style={styles.textInput}
+        multiline={true}
+        numberOfLines={4}
+        placeholder="Share about your day!"
         value={formState.description}
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Notes", { text })}
+          onPress={addTodo}
         >
-          <Button style={styles.buttonText} title="Save" onPress={addTodo} />
+          <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.goBack()}
+          onPress={navigation.goBack}
         >
           <Text style={styles.buttonText}>Dismiss</Text>
         </TouchableOpacity>
       </View>
-      {/* <Text>{text.toUpperCase()}</Text> */}
     </View>
   );
 }
@@ -97,6 +99,7 @@ const styles = StyleSheet.create({
     width: "80%",
     padding: 10,
     marginTop: 20,
+    marginBottom: 20,
   },
   button: {
     padding: 10,
