@@ -8,6 +8,7 @@ import {
   Button
 } from "react-native";
 
+// AWS imports 
 import { API, graphqlOperation } from 'aws-amplify'
 import { createTodo } from '../src/graphql/mutations'
 import { listTodos } from '../src/graphql/queries'
@@ -24,6 +25,7 @@ export default function AddScreen({ navigation }) {
     fetchTodos()
   }, [])
 
+  // To update the formData for sending to database
   function setInput(key, value) {
     setFormState({ ...formState, [key]: value })
   }
@@ -36,6 +38,7 @@ export default function AddScreen({ navigation }) {
     } catch (err) { console.log('error fetching todos') }
   }
 
+  // Create an entry in the ToDo table
   async function addTodo() {
     try {
       const todo = { ...formState }

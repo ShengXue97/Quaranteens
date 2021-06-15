@@ -9,6 +9,9 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
+import { API, graphqlOperation } from 'aws-amplify'
+import { listTodos } from '../src/graphql/queries'
+
 const SAMPLE_NOTES = [
   { title: 'Walk the cat', id: '0', done: false },
   { title: 'Water the cat', id: '1', done: false },
@@ -18,6 +21,7 @@ const SAMPLE_NOTES = [
 
 export default function NotesScreen({ navigation, route }) {
   const [notes, setNotes] = useState(SAMPLE_NOTES);
+  const [todos, setTodos] = useState([])
 
   // This is to set up the top right button
   useEffect(() => {
@@ -48,6 +52,20 @@ export default function NotesScreen({ navigation, route }) {
     });
   });
 
+  useEffect(() => {
+    fetchTodos()
+  }, [])
+
+  // Fetching the items from Todo Table's database
+  async function fetchTodos() {
+    try {
+      const todoData = await API.graphql(graphqlOperation(listTodos))
+      const todos = todoData.data.listTodos.items
+      setTodos(todos)
+    } catch (err) { console.log('error fetching todos') }
+  }
+
+
   // The function to render each row in our FlatList
   function renderItem({ item }) {
     return (
@@ -74,6 +92,14 @@ export default function NotesScreen({ navigation, route }) {
         style={{ width: '100%' }}
         keyExtractor={(item) => item.id.toString()}
       />
+      {
+        todos.map((todo, index) => (
+          <View key={todo.id ? todo.id : index} style={styles.todo}>
+            <Text style={styles.todoName}>{todo.name}</Text>
+            <Text>{todo.description}</Text>
+          </View>
+        ))
+      }
     </View>
   );
 }
