@@ -45,6 +45,7 @@ export default function AddScreen({ navigation }) {
       setTodos([...todos, todo])
       setFormState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
+      navigation.goBack()
     } catch (err) {
       console.log('error creating todo:', err)
     }
