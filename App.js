@@ -2,8 +2,7 @@ import * as React from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/HomeScreen";
-import EventsScreen from "./screens/EventsScreen";
+import NotesStack from "./screens/NotesStack";
 import ContactsScreen from "./screens/ContactsScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -38,7 +37,7 @@ export default function App() {
         }}
       >
 
-        <Tab.Screen name="My Diaries" component={EventsScreen} />
+        <Tab.Screen name="My Diaries" component={NotesStack} />
         <Tab.Screen name="Forum" component={ContactsScreen} />
       </Tab.Navigator>
     </NavigationContainer>

@@ -20,7 +20,7 @@ const SAMPLE_NOTES = [
 ];
 
 export default function NotesScreen({ navigation, route }) {
-  const [notes, setNotes] = useState(SAMPLE_NOTES);
+  const [notes, setNotes] = useState([]);
 
   function refreshNotes() {
     db.transaction((tx) => {
