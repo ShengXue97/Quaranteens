@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   FlatList,
-  Button,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {Ionicons} from '@expo/vector-icons';
 
 const SAMPLE_NOTES = [
-  { title: 'Walk the cat', id: '0', done: false },
-  { title: 'Water the cat', id: '1', done: false },
-  { title: 'Buy the milk', id: '2', done: false },
-  { title: 'Water the milk', id: '3', done: false },
+  {title: 'Walk the cat', id: '0', done: false},
+  {title: 'Water the cat', id: '1', done: false},
+  {title: 'Buy the milk', id: '2', done: false},
+  {title: 'Water the milk', id: '3', done: false},
 ];
 
-export default function NotesScreen({ navigation, route }) {
+export default function NotesScreen({navigation, route}) {
   const [notes, setNotes] = useState(SAMPLE_NOTES);
 
   // This is to set up the top right button
@@ -37,19 +36,11 @@ export default function NotesScreen({ navigation, route }) {
           />
         </TouchableOpacity>
       ),
-      headerLeft: () => (
-        <Button
-          onPress={() => {
-            navigation.navigate('Login');
-          }}
-          title="Login"
-        />
-      ),
     });
   });
 
   // The function to render each row in our FlatList
-  function renderItem({ item }) {
+  function renderItem({item}) {
     return (
       <View
         style={{
@@ -71,7 +62,7 @@ export default function NotesScreen({ navigation, route }) {
       <FlatList
         data={notes}
         renderItem={renderItem}
-        style={{ width: '100%' }}
+        style={{width: '100%'}}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
