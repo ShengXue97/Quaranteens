@@ -1,51 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, {useState} from "react";
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  Button
 } from "react-native";
 
 // AWS imports 
-import { API, graphqlOperation } from 'aws-amplify'
-import { createTodo } from '../src/graphql/mutations'
-import { listTodos } from '../src/graphql/queries'
+import {API, graphqlOperation} from 'aws-amplify'
+import {createTodo} from '../src/graphql/mutations'
 
-const initialState = { name: '', description: '' }
+const initialState = {name: '', description: ''}
 
-export default function AddScreen({ navigation }) {
-  const [text, setText] = useState("");
-
-  const [formState, setFormState] = useState(initialState)
-  const [todos, setTodos] = useState([])
-
-  useEffect(() => {
-    fetchTodos()
-  }, [])
+export default function AddScreen({navigation}) {
+  const [ formState, setFormState ] = useState(initialState)
 
   // To update the formData for sending to database
   function setInput(key, value) {
-    setFormState({ ...formState, [key]: value })
-  }
-
-  async function fetchTodos() {
-    try {
-      const todoData = await API.graphql(graphqlOperation(listTodos))
-      const todos = todoData.data.listTodos.items
-      setTodos(todos)
-    } catch (err) { console.log('error fetching todos') }
+    setFormState({...formState, [ key ]: value})
   }
 
   // Create an entry in the ToDo table
   async function addTodo() {
     try {
-      const todo = { ...formState }
-      setTodos([...todos, todo])
+      const todo = {...formState}
       setFormState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
-      navigation.goBack()
+      navigation.navigate("My Diaries", {todo})
     } catch (err) {
       console.log('error creating todo:', err)
     }
