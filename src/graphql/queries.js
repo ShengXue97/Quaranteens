@@ -26,3 +26,34 @@ export const listTodos = /* GraphQL */ `
     }
   }
 `;
+export const getForum = /* GraphQL */ `
+  query GetForum($id: ID!) {
+    getForum(id: $id) {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
+export const listForums = /* GraphQL */ `
+  query ListForums(
+    $filter: ModelForumFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listForums(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        title
+        content
+        userID
+        votes
+        comments
+      }
+      nextToken
+    }
+  }
+`;

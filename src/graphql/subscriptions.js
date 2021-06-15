@@ -28,3 +28,39 @@ export const onDeleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const onCreateForum = /* GraphQL */ `
+  subscription OnCreateForum {
+    onCreateForum {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
+export const onUpdateForum = /* GraphQL */ `
+  subscription OnUpdateForum {
+    onUpdateForum {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
+export const onDeleteForum = /* GraphQL */ `
+  subscription OnDeleteForum {
+    onDeleteForum {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
