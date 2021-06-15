@@ -1,13 +1,12 @@
 import * as React from "react";
-import { Text, View } from "react-native";
+// import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./screens/HomeScreen";
+// import HomeScreen from "./screens/HomeScreen";
 import EventsScreen from "./screens/EventsScreen";
 import ContactsScreen from "./screens/ContactsScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-
 
 const Tab = createBottomTabNavigator();
 

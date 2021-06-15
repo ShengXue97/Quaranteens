@@ -25,10 +25,6 @@ function EventsScreen({ navigation }) {
   );
 }
 
-function EventsSecondScreen() {
-  return <Text>Don't get scammed</Text>;
-}
-
 const Stack = createStackNavigator();
 
 export default function EventsStack() {
