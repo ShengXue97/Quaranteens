@@ -1,0 +1,28 @@
+{
+	"api": {
+		"quaranteens": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"additionalAuthenticationProviders": [],
+					"defaultAuthentication": {
+						"authenticationType": "API_KEY",
+						"apiKeyConfig": {
+							"description": "dev",
+							"apiKeyExpirationDays": "100"
+						}
+					}
+				}
+			}
+		}
+	},
+	"auth": {
+		"quaranteens910fcf51": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}

@@ -1,3 +1,7 @@
+import Amplify from 'aws-amplify'
+import config from './aws-exports'
+Amplify.configure(config)
+
 import * as React from "react";
 import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -8,10 +12,11 @@ import ContactsScreen from "./screens/ContactsScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
+import { withAuthenticator } from 'aws-amplify-react-native'
 
 const Tab = createBottomTabNavigator();
 
-export default function App() {
+const App = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -44,3 +49,5 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+export default withAuthenticator(App)
