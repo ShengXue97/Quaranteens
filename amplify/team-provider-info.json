@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-quaranteens-dev-214858-authRole",
+            "UnauthRoleArn": "arn:aws:iam::943739973931:role/amplify-quaranteens-dev-214858-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::943739973931:role/amplify-quaranteens-dev-214858-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-quaranteens-dev-214858-deployment",
+            "UnauthRoleName": "amplify-quaranteens-dev-214858-unauthRole",
+            "StackName": "amplify-quaranteens-dev-214858",
+            "StackId": "arn:aws:cloudformation:us-east-1:943739973931:stack/amplify-quaranteens-dev-214858/71e232b0-cde0-11eb-af26-12342204bca9",
+            "AmplifyAppId": "d29w6ctc8zuq8i"
+        },
+        "categories": {
+            "auth": {
+                "quaranteens910fcf51": {}
+            }
+        }
+    }
+}
