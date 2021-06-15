@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
-import { API, graphqlOperation } from 'aws-amplify'
-import { listTodos } from '../src/graphql/queries'
+import {API, graphqlOperation} from 'aws-amplify'
+import {listTodos} from '../src/graphql/queries'
 
-export default function NotesScreen({ navigation, route }) {
+export default function NotesScreen({navigation, route}) {
   const [todos, setTodos] = useState([])
 
   // Responds to coming back from the add screen
@@ -40,7 +40,7 @@ export default function NotesScreen({ navigation, route }) {
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity onPress={() => {
-          navigation.navigate('Add Screen');
+          navigation.navigate('Add Diary Entry');
         }}>
           <Ionicons
             name="ios-create-outline"
@@ -66,7 +66,7 @@ export default function NotesScreen({ navigation, route }) {
       const todoData = await API.graphql(graphqlOperation(listTodos))
       const todos = todoData.data.listTodos.items
       setTodos(todos)
-    } catch (err) { console.log('error fetching todos') }
+    } catch (err) {console.log('error fetching todos')}
   }
 
 
@@ -84,6 +84,7 @@ export default function NotesScreen({ navigation, route }) {
           justifyContent: 'space-between',
         }}>
         <Text>{item.name}</Text>
+        <Text>{item.description}</Text>
       </View>
     );
   }

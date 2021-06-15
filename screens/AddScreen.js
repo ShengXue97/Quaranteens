@@ -45,6 +45,7 @@ export default function AddScreen({ navigation }) {
       setTodos([...todos, todo])
       setFormState(initialState)
       await API.graphql(graphqlOperation(createTodo, {input: todo}))
+      navigation.goBack()
     } catch (err) {
       console.log('error creating todo:', err)
     }
@@ -57,6 +58,12 @@ export default function AddScreen({ navigation }) {
         onChangeText={val => setInput('name', val)}
         style={styles.textInput}
         value={formState.name}
+      />
+      <Text style={{ fontSize: 24 }}>Description</Text>
+      <TextInput
+        onChangeText={val => setInput('description', val)}
+        style={styles.textInput}
+        value={formState.description}
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
