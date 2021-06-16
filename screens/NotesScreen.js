@@ -5,15 +5,11 @@ import {
   View,
   TouchableOpacity,
   FlatList,
-  Image,
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 import {API, graphqlOperation} from 'aws-amplify'
 import {listTodos} from '../src/graphql/queries'
-import { ListItem, Avatar } from 'react-native-elements'
-import { LinearGradient } from 'expo-linear-gradient';
-
 export default function NotesScreen({navigation, route}) {
   const [todos, setTodos] = useState([])
 
@@ -58,35 +54,25 @@ export default function NotesScreen({navigation, route}) {
       <TouchableOpacity
         onPress={() => navigation.navigate("View Diary Entry", {item})}
       >
-        <LinearGradient
-          // Button Linear Gradient
-          colors={['#91f016', '#85cf25', '#73ad26']}
-          style={styles.button}>
-          <Image
-            style= {{width: 30, height: 30,}}
-            source={require('../assets/to-do-list.png')}
-          />
-          <View>
-            <Text styles = {styles.diaryTitle}>{item.name}</Text>
-            <Text styles = {styles.diaryDescription}>{item.description}</Text>
-          </View>
-        </LinearGradient>
+        <View style={{
+          borderRadius: 10,
+          marginTop: 10,
+          padding: 10,
+          backgroundColor: '#fff1eb',
+        }}>
+          <Text style={styles.diaryTitle}>{item.name}</Text>
+          <Text style={styles.diaryDescription}>{item.description}</Text>
+        </View>
       </TouchableOpacity>
     );
   }
 
   return (
     <View style={styles.container}>
-      <LinearGradient
-        // Background Linear Gradient
-        colors={['rgba(0,0,0,0.8)', 'transparent']}
-        style={styles.background}
-      />
-      
       <FlatList
         data={todos}
         renderItem={renderItem}
-        style={{width: '100%'}}
+        style={{padding: '10%'}}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
@@ -97,17 +83,19 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#a8a9b0',
   },
   diaryTitle: {
     fontSize: 20,
-    color: 'white',
     fontWeight: 'bold',
     paddingBottom: 10,
+    color: '#585b7a',
+    fontFamily: 'Campuri Book',
   },
   diaryDescription: {
     fontSize: 15,
-    color: 'white',
     paddingBottom: 10,
+    color: '#585b7a',
   },
   linearGradient: {
     flex: 1,
