@@ -190,7 +190,6 @@ const styles = StyleSheet.create({
     margin: 20,
     marginBottom: 20,
     fontSize: 20,
-    textAlign: "left",
   },
   flatList: {
     padding: 10,
