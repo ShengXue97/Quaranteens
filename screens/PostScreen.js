@@ -11,7 +11,7 @@ import {
 import { API, graphqlOperation } from "aws-amplify";
 import { createForum } from "../src/graphql/mutations";
 
-const initialState = {title: '', content: ''}
+const initialState = {title: '', content: '', userID:1, votes:0, comments:[]}
 
 export default function PostScreen({ navigation}) {
   const [formState, setFormState] = useState(initialState);
@@ -56,7 +56,7 @@ export default function PostScreen({ navigation}) {
           style={styles.button}
           onPress={addPost}
         >
-          <Text style={styles.buttonText}>Save</Text>
+          <Text style={styles.buttonText}>Post</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}

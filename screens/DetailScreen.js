@@ -1,51 +1,105 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   TextInput,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 
+import { API, graphqlOperation } from "aws-amplify";
+import { updateForum } from "../src/graphql/mutations";
 
 export default function DetailsScreen({ route }) {
-  const { id, title, content } = route.params;
-  function upvote() {
-    route.params.upvote += 1;
+  const initialState = { ...route.params };
+  const [formState, setFormState] = useState(initialState);
+
+  // To update the formData for sending to database
+  function setInput(key, value) {
+    setFormState({ ...formState, [key]: value });
   }
 
-  function comment(text) {
-    route.params.comments = [...route.params.comments, text];
+  async function updatePost() {
+    try {
+      const post = { ...formState };
+      setFormState(initialState);
+      await API.graphql(graphqlOperation(updateForum, { input: post }));
+      //navigation.navigate("Forums", { post });
+    } catch (err) {
+      console.log("error creating post:", err);
+    }
   }
 
+  
+  function renderItem({ item }) {
+    return (
+      <TouchableOpacity>
+        <View
+          style={styles.flatList}>
+          <Text
+            style={styles.comments}
+            numberOfLines={2}
+          >
+            {item}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+  
+
+  let val = '';
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.content}>{content}</Text>
+      <Text style={styles.title}>{initialState.title}</Text>
+      <Text style={styles.content}>{initialState.content}</Text>
 
       {/* <Text>{comments}</Text> */}
 
-      <TouchableOpacity onPress={() => upvote}>
+      <TouchableOpacity
+        onPress={() => {
+          setInput("votes", formState.votes + 1);
+          updatePost(); 
+        }}
+      >
         <MaterialIcons
           name="where-to-vote"
           size={30}
           color="black"
           style={{
             color: "#f55",
-            textAlign: 'center'
+            textAlign: "center",
           }}
         />
-        <Text>Upvotes</Text>
+        <Text>Upvote</Text>
       </TouchableOpacity>
+      
+      
+      <Text>{formState.votes != 0 ? formState.votes : null}</Text>
 
-      <Text style={styles.comment}>Comment below:</Text>
 
-      <TextInput style={styles.textInput} />
+      <Text style={styles.comments}>Past comments:</Text>
 
-  
-      <TouchableOpacity  onPress={() => comment}>
+      <FlatList
+        style={{ width: "30%", textAlign: 'left', fontSize: 15}}
+        data={formState.comments ? formState.comments : ["No comments"]}
+        renderItem={renderItem}
+      />
+      <Text style={{ textAlign: "left", margin: 20 }}>Comment below:</Text>
+
+      <TextInput
+        style={styles.textInput}
+        onChangeText={(text) => {
+          val = text;
+        }}
+      />
+
+      <TouchableOpacity onPress={() => {
+        setInput("comments", formState.comments.concat([val]));
+        updatePost();}}>
         <EvilIcons
           name="comment"
           size={30}
@@ -53,10 +107,10 @@ export default function DetailsScreen({ route }) {
           style={{
             color: "#f55",
             marginTop: 10,
-            textAlign: 'center'
+            textAlign: "center",
           }}
         />
-        <Text>Submit Comments</Text>
+        <Text style={{marginBottom:10}}>Submit Comments</Text>
       </TouchableOpacity>
     </View>
   );
@@ -78,6 +132,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     fontSize: 25,
+    marginBottom: 20,
   },
   container: {
     flex: 1,
@@ -103,8 +158,17 @@ const styles = StyleSheet.create({
   buttonText: {
     textAlign: "center",
   },
-  comment: {
-    justifyContent: "left",
+  comments: {
     margin: 20,
+    marginBottom: 20,
+    fontSize: 20,
+    alignItems: "left", // not functional
+  },
+  flatList: {
+    padding: 10,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginTop: 10,
   },
 });

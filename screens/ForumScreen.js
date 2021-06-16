@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import {
   FlatList,
@@ -105,7 +104,7 @@ function ForumScreen({ navigation , route}) {
     <View style={styles.container}>
       {/* <Button onPress={addColor} title="Add Color" /> */}
       <FlatList
-        style={{ width: "100%"}}
+        style={{ width: "90%"}}
         data={posts}
         renderItem={renderItem}
       />
