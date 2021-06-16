@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     margin: 20,
     marginBottom: 20,
     fontSize: 20,
-    alignItems: "left", // not functional
   },
   flatList: {
     padding: 10,
