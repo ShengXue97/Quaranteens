@@ -60,7 +60,7 @@ function ForumScreen({ navigation , route}) {
     return (
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate("View Post Details", { ...item });
+          navigation.navigate("View Forum Post", { ...item });
         }}
       >
         <View
@@ -99,7 +99,7 @@ export default function ForumStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Forums" component={ForumScreen} />
-      <Stack.Screen name="View Post Details" component={DetailScreen} />
+      <Stack.Screen name="View Forum Post" component={DetailScreen} />
       <Stack.Screen name="Create New Post" component={PostScreen} />
       <Stack.Screen name="Comment" component={CommentScreen} />
     </Stack.Navigator>

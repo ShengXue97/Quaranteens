@@ -13,24 +13,12 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import { API, graphqlOperation, Auth } from "aws-amplify";
 import { updateForum } from "../src/graphql/mutations";
 
-// Not working properly.
-// async function fetchUser() {
-//   const user = await Auth.currentAuthenticatedUser();
-//   console.log(user);
-//   console.log(user.signInUserSession.accessToken.payload["cognito:groups"]);
-//   return user.username;
-// }
-
-// const userID = fetchUser();
-
 const getCurrentDate=()=>{
 
   var date = new Date().getDate();
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
 
-  //Alert.alert(date + '-' + month + '-' + year);
-  // You can turn it in to your desired format
   return date + '-' + month + '-' + year;//format: dd-mm-yyyy;
 }
 
@@ -80,23 +68,6 @@ export default function DetailsScreen({ route }) {
     }
   }
 
-  // function extractComment() {
-  //   let result = [];
-  //   if (formState.comments){
-  //     for (var comment in formState.comments) {
-  //       result.push(comment.content)
-  //     }
-  //   }
-  //   return result;
-  // }
-
-  // let history_comments = [];
-  // try {
-  //   history_comments = extractComment();
-  // } catch (err) {
-  //   console.log(err);
-  // } 
-
   function renderItem({ item }) {
     return (
       <View style={styles.flatList}>
@@ -141,11 +112,11 @@ export default function DetailsScreen({ route }) {
       <Text style={styles.comments}>Comments:</Text>
 
       <FlatList
-        style={{ width: "30%", textAlign: "left", fontSize: 15 }}
+        style={{ textAlign: "left", fontSize: 15 }}
         data={texts}
         renderItem={renderItem}
       />
-      <Text style={{ textAlign: "left", margin: 20 }}>Comment below:</Text>
+      <Text style={{ textAlign: "left", margin: 10 }}>Comment below:</Text>
 
       <TextInput
         style={styles.textInput}
@@ -170,7 +141,7 @@ export default function DetailsScreen({ route }) {
             textAlign: "center",
           }}
         />
-        <Text style={{ marginBottom: 10 }}>Submit Comments</Text>
+        <Text style={{ marginBottom: 10 }}>Submit Comment</Text>
       </TouchableOpacity>
     </View>
   );
@@ -182,27 +153,26 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: 20,
     paddingBottom: 20,
+    width: "90%",
   },
   content: {
-    width: "60%",
+    width: "90%",
     height: "30%",
+    padding: 10,
     borderColor: "grey",
+    borderRadius: 10,
     borderWidth: 2,
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    fontSize: 25,
+    fontFamily: 'Campuri Book',
     marginBottom: 20,
   },
   container: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
   },
   textInput: {
     borderColor: "grey",
     borderWidth: 1,
-    width: "40%",
+    width: "80%",
     padding: 10,
     marginTop: 20,
     height: 50,
@@ -220,7 +190,7 @@ const styles = StyleSheet.create({
   },
   comments: {
     margin: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     fontSize: 20,
   },
   flatList: {
