@@ -18,7 +18,6 @@ export default function DetailsScreen({ route }) {
   const [formState, setFormState] = useState(initialState);
   const userID = fetchUser();
   const [text, setText] = useState(route.params.comments);
-  const [vote, setVote] = useState(route.params.votes);
   const [voted, setVoted] = useState(false);
 
 
@@ -37,12 +36,24 @@ export default function DetailsScreen({ route }) {
 
   async function updatePost() {
     try {
-      const post = { ...formState };
-      setFormState(formState);
+      const post = {...formState};
+      console.log('formState', formState)
       await API.graphql(graphqlOperation(updateForum, { input: post }));
-      //navigation.navigate("Forums", { post });
     } catch (err) {
       console.log("error creating post:", err);
+    }
+  }
+
+  async function upvotePost() {
+    try {
+      const post = {
+        ...formState,
+        votes: formState.votes + 1,
+      };
+      await API.graphql(graphqlOperation(updateForum, {input: post}));
+      setInput("votes", formState.votes + 1);
+    } catch (err) {
+      console.log("error upvoting post:", err);
     }
   }
 
@@ -70,20 +81,14 @@ export default function DetailsScreen({ route }) {
     <View style={styles.container}>
       <Text style={styles.title}>{formState.title}</Text>
       <Text style={styles.content}>{formState.content}</Text>
-
-      {/* <Text>{comments}</Text> */}
-
       <TouchableOpacity
         onPress={() => {
           if (!voted) {
-            setVote(vote+1);
             setVoted(true)
+            upvotePost();
           } else {
             alert('You have voted.')
-          }
-          setInput("votes", formState.votes + 1);
-          console.log('votes:'+formState.votes);
-          updatePost(); 
+          } 
         }}
       >
         <MaterialIcons
@@ -98,7 +103,7 @@ export default function DetailsScreen({ route }) {
         <Text>Upvote</Text>
       </TouchableOpacity>
       
-      <Text>{vote}</Text>
+      <Text>{formState.votes}</Text>
 
       <Text style={styles.comments}>Past comments:</Text>
 
