@@ -52,18 +52,18 @@ export default function NotesScreen({navigation, route}) {
   // The function to render each row in our FlatList
   function renderItem({item}) {
     return (
-      <View
-        style={styles.flatList}>
-        <Text
-          style={styles.diaryTitle}
-          numberOfLines={1}
-        >
-          {item.name}
-        </Text>
-        <Text numberOfLines={2}>
-          {item.description}
-        </Text>
-      </View>
+        <View
+          style={styles.flatList}>
+          <Text
+            style={styles.diaryTitle}
+            numberOfLines={1}
+          >
+            {item.name}
+          </Text>
+          <Text numberOfLines={2}>
+            {item.description}
+          </Text>
+        </View>
     );
   }
 
