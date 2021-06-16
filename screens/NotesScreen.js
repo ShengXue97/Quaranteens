@@ -5,11 +5,14 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Image,
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
 import {API, graphqlOperation} from 'aws-amplify'
 import {listTodos} from '../src/graphql/queries'
+import { ListItem, Avatar } from 'react-native-elements'
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function NotesScreen({navigation, route}) {
   const [todos, setTodos] = useState([])
@@ -55,24 +58,27 @@ export default function NotesScreen({navigation, route}) {
       <TouchableOpacity
         onPress={() => navigation.navigate("View Diary Entry", {item})}
       >
-        <View
-          style={styles.flatList}>
-          <Text
-            style={styles.diaryTitle}
-            numberOfLines={1}
-          >
-            {item.name}
-          </Text>
-          <Text numberOfLines={2}>
-            {item.description}
-          </Text>
-        </View>
+        <ListItem key={item.id} bottomDivider>
+          <Image
+            style= {{width: 30, height: 30,}}
+            source={require('../assets/to-do-list.png')}
+          />
+          <ListItem.Content>
+            <ListItem.Title>{item.name}</ListItem.Title>
+            <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
+          </ListItem.Content>
+        </ListItem>
       </TouchableOpacity>
     );
   }
 
   return (
     <View style={styles.container}>
+      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
+        <Text>
+          Sign in with Facebook
+        </Text>
+      </LinearGradient>
       <FlatList
         data={todos}
         renderItem={renderItem}
@@ -101,5 +107,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     paddingBottom: 10,
-  }
+  },
+  linearGradient: {
+    flex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+    borderRadius: 5
+  },
 });
