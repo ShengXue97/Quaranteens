@@ -3,11 +3,11 @@ import config from './aws-exports'
 Amplify.configure(config)
 
 import * as React from "react";
-import { Text, View } from "react-native";
+// import { Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import NotesStack from "./screens/NotesStack";
-import ContactsScreen from "./screens/ContactsScreen";
+import ForumScreen from "./screens/ForumScreen";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -43,7 +43,7 @@ const App = () => {
       >
 
         <Tab.Screen name="My Diaries" component={NotesStack} />
-        <Tab.Screen name="Forum" component={ContactsScreen} />
+        <Tab.Screen name="Forum" component={ForumScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
