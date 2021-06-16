@@ -12,10 +12,18 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { withAuthenticator } from 'aws-amplify-react-native'
-
+import * as Font from "expo-font";
+import { useFonts } from "@use-expo/font";
+import AppLoading from 'expo-app-loading';
 const Tab = createBottomTabNavigator();
 
 const App = () => {
+  const [isLoaded] = useFonts({
+    'Campuri Book': require("./assets/fonts/campuni-demo-book.otf")
+  });
+  if (!isLoaded) {
+    return <AppLoading />
+  }
   return (
     <NavigationContainer>
       <Tab.Navigator
