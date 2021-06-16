@@ -6,6 +6,7 @@ import {
   View,
   Button,
   TouchableOpacity,
+  Divider,
 } from "react-native";
 
 import {Ionicons} from '@expo/vector-icons';
@@ -85,6 +86,7 @@ function ForumScreen({ navigation , route}) {
     <View style={styles.container}>
       {/* <Button onPress={addColor} title="Add Color" /> */}
       <Text style={styles.header}>Connect with fellow quarantined people!</Text>
+
       <FlatList
         style={{ width: "90%"}}
         data={posts}
@@ -111,6 +113,9 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 25,
     padding: 5,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    width: '90%',
   },
   container: {
     flex: 1,

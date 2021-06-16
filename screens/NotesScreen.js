@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   FlatList,
+  Divider,
 } from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -69,11 +70,19 @@ export default function NotesScreen({navigation, route}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Note down your feelings during quarantine</Text>
+      <View style={{
+          marginTop: 10,
+          marginLeft: 10,
+          marginRight: 10,
+          padding: 10,
+        }}>
+          <Text style={styles.diaryTitle}>Note down your feelings during quarantine</Text>
+      </View>
+    
       <FlatList
         data={todos}
         renderItem={renderItem}
-        style={{padding: '10%'}}
+        style={{padding: '5%'}}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
@@ -81,10 +90,6 @@ export default function NotesScreen({navigation, route}) {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 25,
-    padding: 5,
-  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -95,6 +100,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 10,
     color: '#585b7a',
+    textAlign: 'center',
   },
   diaryDescription: {
     fontFamily: 'Campuri Book',
