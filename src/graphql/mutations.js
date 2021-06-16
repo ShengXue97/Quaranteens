@@ -37,3 +37,48 @@ export const deleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const createForum = /* GraphQL */ `
+  mutation CreateForum(
+    $input: CreateForumInput!
+    $condition: ModelForumConditionInput
+  ) {
+    createForum(input: $input, condition: $condition) {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
+export const updateForum = /* GraphQL */ `
+  mutation UpdateForum(
+    $input: UpdateForumInput!
+    $condition: ModelForumConditionInput
+  ) {
+    updateForum(input: $input, condition: $condition) {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
+export const deleteForum = /* GraphQL */ `
+  mutation DeleteForum(
+    $input: DeleteForumInput!
+    $condition: ModelForumConditionInput
+  ) {
+    deleteForum(input: $input, condition: $condition) {
+      id
+      title
+      content
+      userID
+      votes
+      comments
+    }
+  }
+`;
