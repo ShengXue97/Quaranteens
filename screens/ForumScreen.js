@@ -19,25 +19,6 @@ import PostScreen from "./PostScreen";
 import CommentScreen from "./CommentScreen";
 
 
-// const EXAMPLE_POST = [{
-//   user_id: 'Meee1',
-//   title: 'Random text',
-//   content: 'Hi thereeeeeeeeeee',
-//   comments: ['Great!','Helluuu'],
-//   votes: 3,
-// },{
-//   user_id: 'Meee2',
-//   title: 'Random text',
-//   content: 'Helloooo',
-//   comments: ['Great!','Helluuu'],
-//   votes: 3,
-// },{
-//   user_id: 'Meee3',
-//   title: 'Random text',
-//   content: 'Yessssshahahah',
-//   comments: ['Great!','Helluuu'],
-//   votes: 3,
-//   }]
 
 function ForumScreen({ navigation , route}) {
   const [posts, setPosts] = useState([]);

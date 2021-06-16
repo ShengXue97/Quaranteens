@@ -8,18 +8,37 @@ import {
 } from "react-native";
 
 // AWS imports
-import { API, graphqlOperation } from "aws-amplify";
+import { API, graphqlOperation, Auth } from "aws-amplify";
 import { createForum } from "../src/graphql/mutations";
 
-const initialState = {title: '', content: '', userID:1, votes:0, comments:[]}
 
-export default function PostScreen({ navigation}) {
+async function fetchUser() {
+  const user = await Auth.currentAuthenticatedUser();
+  console.log(user);
+  console.log(user.signInUserSession.accessToken.payload["cognito:groups"]);
+  return user.username;
+}
+
+const initialState = {
+  title: "",
+  content: "",
+  userID: fetchUser(),
+  votes: 0,
+  comments: [{
+    userID:fetchUser(),
+    content: 'Default content',
+  }],
+};
+
+export default function PostScreen({ navigation }) {
   const [formState, setFormState] = useState(initialState);
 
   // To update the formData for sending to database
   function setInput(key, value) {
     setFormState({ ...formState, [key]: value });
   }
+
+
   // Create an entry in the ToDo table
   async function addPost() {
     try {
@@ -36,14 +55,14 @@ export default function PostScreen({ navigation}) {
     <View style={[styles.container, { backgroundColor: "white" }]}>
       <Text style={{ fontSize: 24 }}>Title of Post Entry</Text>
       <TextInput
-        onChangeText={val => setInput('title', val)}
+        onChangeText={(val) => setInput("title", val)}
         style={styles.textInput}
         value={formState.name}
       />
       <Text style={{ fontSize: 24 }}>Content</Text>
       <TextInput
-        onChangeText={val => {
-          setInput('content', val)
+        onChangeText={(val) => {
+          setInput("content", val);
         }}
         style={styles.textInput}
         multiline={true}
@@ -52,16 +71,10 @@ export default function PostScreen({ navigation}) {
         value={formState.description}
       />
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={addPost}
-        >
+        <TouchableOpacity style={styles.button} onPress={addPost}>
           <Text style={styles.buttonText}>Post</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={navigation.goBack}
-        >
+        <TouchableOpacity style={styles.button} onPress={navigation.goBack}>
           <Text style={styles.buttonText}>Dismiss</Text>
         </TouchableOpacity>
       </View>
@@ -99,4 +112,3 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
-
