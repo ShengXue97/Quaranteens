@@ -52,19 +52,22 @@ export default function NotesScreen({navigation, route}) {
   // The function to render each row in our FlatList
   function renderItem({item}) {
     return (
-      <View
-        style={{
-          padding: 10,
-          paddingTop: 20,
-          paddingBottom: 20,
-          borderBottomColor: '#ccc',
-          borderBottomWidth: 1,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-        }}>
-        <Text>{item.name}</Text>
-        <Text>{item.description}</Text>
-      </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("View Diary Entry", {item})}
+      >
+        <View
+          style={styles.flatList}>
+          <Text
+            style={styles.diaryTitle}
+            numberOfLines={1}
+          >
+            {item.name}
+          </Text>
+          <Text numberOfLines={2}>
+            {item.description}
+          </Text>
+        </View>
+      </TouchableOpacity>
     );
   }
 
@@ -73,7 +76,7 @@ export default function NotesScreen({navigation, route}) {
       <FlatList
         data={todos}
         renderItem={renderItem}
-        style={{width: '100%'}}
+        style={{width: '90%'}}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
@@ -87,4 +90,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  flatList: {
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginTop: 10,
+  },
+  diaryTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    paddingBottom: 10,
+  }
 });
