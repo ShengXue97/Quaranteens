@@ -7,35 +7,64 @@ import {
   TextInput,
 } from "react-native";
 
-export default function PostScreen({ navigation, route }) {
-  const [text, setText] = useState("");
+// AWS imports
+import { API, graphqlOperation } from "aws-amplify";
+import { createForum } from "../src/graphql/mutations";
+
+const initialState = {title: '', content: ''}
+
+export default function PostScreen({ navigation}) {
+  const [formState, setFormState] = useState(initialState);
+
+  // To update the formData for sending to database
+  function setInput(key, value) {
+    setFormState({ ...formState, [key]: value });
+  }
+  // Create an entry in the ToDo table
+  async function addPost() {
+    try {
+      const post = { ...formState };
+      setFormState(initialState);
+      await API.graphql(graphqlOperation(createForum, { input: post }));
+      navigation.navigate("Forums", { post });
+    } catch (err) {
+      console.log("error creating post:", err);
+    }
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: "white" }]}>
-      <Text style={{ fontSize: 24 }}>What do you want to add?</Text>
+      <Text style={{ fontSize: 24 }}>Title of Post Entry</Text>
       <TextInput
+        onChangeText={val => setInput('title', val)}
         style={styles.textInput}
-        value={text}
-        onChangeText={(input) => setText(input)}
+        value={formState.name}
+      />
+      <Text style={{ fontSize: 24 }}>Content</Text>
+      <TextInput
+        onChangeText={val => {
+          setInput('content', val)
+        }}
+        style={styles.textInput}
+        multiline={true}
+        numberOfLines={4}
+        placeholder="Share about your day with others!"
+        value={formState.description}
       />
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => {
-              route.params.text = {text}
-              navigation.navigate("Forums", {route})
-          }}
+          onPress={addPost}
         >
           <Text style={styles.buttonText}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.goBack()}
+          onPress={navigation.goBack}
         >
           <Text style={styles.buttonText}>Dismiss</Text>
         </TouchableOpacity>
       </View>
-      {/* <Text>{text.toUpperCase()}</Text> */}
     </View>
   );
 }
@@ -53,6 +82,7 @@ const styles = StyleSheet.create({
     width: "80%",
     padding: 10,
     marginTop: 20,
+    marginBottom: 20,
   },
   button: {
     padding: 10,
@@ -69,3 +99,4 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
 });
+
