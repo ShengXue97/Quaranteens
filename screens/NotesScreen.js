@@ -12,7 +12,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {API, graphqlOperation} from 'aws-amplify'
 import {listTodos} from '../src/graphql/queries'
 import { ListItem, Avatar } from 'react-native-elements'
-import LinearGradient from 'react-native-linear-gradient';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function NotesScreen({navigation, route}) {
   const [todos, setTodos] = useState([])
@@ -58,31 +58,35 @@ export default function NotesScreen({navigation, route}) {
       <TouchableOpacity
         onPress={() => navigation.navigate("View Diary Entry", {item})}
       >
-        <ListItem key={item.id} bottomDivider>
+        <LinearGradient
+          // Button Linear Gradient
+          colors={['#91f016', '#85cf25', '#73ad26']}
+          style={styles.button}>
           <Image
             style= {{width: 30, height: 30,}}
             source={require('../assets/to-do-list.png')}
           />
-          <ListItem.Content>
-            <ListItem.Title>{item.name}</ListItem.Title>
-            <ListItem.Subtitle>{item.description}</ListItem.Subtitle>
-          </ListItem.Content>
-        </ListItem>
+          <View>
+            <Text styles = {styles.diaryTitle}>{item.name}</Text>
+            <Text styles = {styles.diaryDescription}>{item.description}</Text>
+          </View>
+        </LinearGradient>
       </TouchableOpacity>
     );
   }
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient}>
-        <Text>
-          Sign in with Facebook
-        </Text>
-      </LinearGradient>
+      <LinearGradient
+        // Background Linear Gradient
+        colors={['rgba(0,0,0,0.8)', 'transparent']}
+        style={styles.background}
+      />
+      
       <FlatList
         data={todos}
         renderItem={renderItem}
-        style={{width: '90%'}}
+        style={{width: '100%'}}
         keyExtractor={(item) => item.id.toString()}
       />
     </View>
@@ -91,21 +95,18 @@ export default function NotesScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#ffc',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  flatList: {
-    padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    marginTop: 10,
-  },
   diaryTitle: {
     fontSize: 20,
+    color: 'white',
     fontWeight: 'bold',
+    paddingBottom: 10,
+  },
+  diaryDescription: {
+    fontSize: 15,
+    color: 'white',
     paddingBottom: 10,
   },
   linearGradient: {
@@ -113,5 +114,18 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     paddingRight: 15,
     borderRadius: 5
+  },
+  button: {
+    margin: 15,
+    alignItems: 'center',
+    borderRadius: 5,
+    flexDirection: 'row',
+  },
+  background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    height: 300,
   },
 });

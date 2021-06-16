@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
   },
   commentDate: {
     fontSize: 10,
-    fontColor: "grey",
+    color: "grey",
     paddingBottom: 10,
   },
 });
