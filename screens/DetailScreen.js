@@ -10,35 +10,57 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 
-import { API, graphqlOperation ,Auth } from "aws-amplify";
+import { API, graphqlOperation, Auth } from "aws-amplify";
 import { updateForum } from "../src/graphql/mutations";
+
+// Not working properly.
+// async function fetchUser() {
+//   const user = await Auth.currentAuthenticatedUser();
+//   console.log(user);
+//   console.log(user.signInUserSession.accessToken.payload["cognito:groups"]);
+//   return user.username;
+// }
+
+// const userID = fetchUser();
+
+const getCurrentDate=()=>{
+
+  var date = new Date().getDate();
+  var month = new Date().getMonth() + 1;
+  var year = new Date().getFullYear();
+
+  //Alert.alert(date + '-' + month + '-' + year);
+  // You can turn it in to your desired format
+  return date + '-' + month + '-' + year;//format: dd-mm-yyyy;
+}
+
+const currentDate = getCurrentDate();
 
 export default function DetailsScreen({ route }) {
   const initialState = { ...route.params };
   const [formState, setFormState] = useState(initialState);
-  const userID = fetchUser();
-  const [text, setText] = useState(route.params.comments);
+  const [texts, setTexts] = useState([]);
+  const [text, setText] = useState('');
   const [voted, setVoted] = useState(false);
-
-
 
   // To update the formData for sending to database
   function setInput(key, value) {
     setFormState({ ...formState, [key]: value });
   }
 
-  async function fetchUser() {
-    const user =  await Auth.currentAuthenticatedUser();
-    console.log(user)
-    console.log(user.signInUserSession.accessToken.payload["cognito:groups"])
-    return user.username;
-  }
 
-  async function updatePost() {
+  async function updateComment() {
     try {
-      const post = {...formState};
-      console.log('formState', formState)
+      const post = {
+        ...formState,
+        comment: [...formState.comments, 
+        {
+          userID,
+          content: texts[-1],
+        }]
+      };
       await API.graphql(graphqlOperation(updateForum, { input: post }));
+
     } catch (err) {
       console.log("error creating post:", err);
     }
@@ -46,37 +68,48 @@ export default function DetailsScreen({ route }) {
 
   async function upvotePost() {
     try {
-      const post = {
+      setFormState({
         ...formState,
         votes: formState.votes + 1,
-      };
-      await API.graphql(graphqlOperation(updateForum, {input: post}));
+      });
+      const post = [...formState]
+      await API.graphql(graphqlOperation(updateForum, { input: post }));
       setInput("votes", formState.votes + 1);
     } catch (err) {
       console.log("error upvoting post:", err);
     }
   }
 
+  // function extractComment() {
+  //   let result = [];
+  //   if (formState.comments){
+  //     for (var comment in formState.comments) {
+  //       result.push(comment.content)
+  //     }
+  //   }
+  //   return result;
+  // }
+
+  // let history_comments = [];
+  // try {
+  //   history_comments = extractComment();
+  // } catch (err) {
+  //   console.log(err);
+  // } 
+
   function renderItem({ item }) {
     return (
-      <View
-        style={styles.flatList}>
-        <Text
-          style={styles.commentUser}
-          numberOfLines={1}
-        >
-          {item.userID}
+      <View style={styles.flatList}>
+        <Text style={styles.comments} numberOfLines={2}>
+          {item}
         </Text>
-        <Text
-          style={styles.comments}
-          numberOfLines={2}
-        >
-          {item.content}
+        <Text style={styles.commentDate} numberOfLines={1}>
+          {currentDate}
         </Text>
       </View>
     );
   }
-  
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{formState.title}</Text>
@@ -84,11 +117,11 @@ export default function DetailsScreen({ route }) {
       <TouchableOpacity
         onPress={() => {
           if (!voted) {
-            setVoted(true)
+            setVoted(true);
             upvotePost();
           } else {
-            alert('You have voted.')
-          } 
+            alert("You have voted.");
+          }
         }}
       >
         <MaterialIcons
@@ -102,14 +135,14 @@ export default function DetailsScreen({ route }) {
         />
         <Text>Upvote</Text>
       </TouchableOpacity>
-      
+
       <Text>{formState.votes}</Text>
 
-      <Text style={styles.comments}>Past comments:</Text>
+      <Text style={styles.comments}>Comments:</Text>
 
       <FlatList
-        style={{ width: "30%", textAlign: 'left', fontSize: 15}}
-        data={text}
+        style={{ width: "30%", textAlign: "left", fontSize: 15 }}
+        data={texts}
         renderItem={renderItem}
       />
       <Text style={{ textAlign: "left", margin: 20 }}>Comment below:</Text>
@@ -117,16 +150,16 @@ export default function DetailsScreen({ route }) {
       <TextInput
         style={styles.textInput}
         onChangeText={(newtext) => {
-          setText([newtext]);
+          setText(newtext);
         }}
       />
 
-      <TouchableOpacity onPress={() => {
-        setInput("comments", formState.comments.concat([{
-          userID,
-          content: text,
-        }]));
-        updatePost();}}>
+      <TouchableOpacity
+        onPress={() => {
+          setTexts([...texts,text])
+          updateComment();
+        }}
+      >
         <EvilIcons
           name="comment"
           size={30}
@@ -137,7 +170,7 @@ export default function DetailsScreen({ route }) {
             textAlign: "center",
           }}
         />
-        <Text style={{marginBottom:10}}>Submit Comments</Text>
+        <Text style={{ marginBottom: 10 }}>Submit Comments</Text>
       </TouchableOpacity>
     </View>
   );
@@ -165,7 +198,6 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: "center",
     alignItems: "center",
-
   },
   textInput: {
     borderColor: "grey",
@@ -198,9 +230,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginTop: 10,
   },
-  commentUser: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  commentDate: {
+    fontSize: 10,
+    fontColor: "grey",
     paddingBottom: 10,
   },
 });
