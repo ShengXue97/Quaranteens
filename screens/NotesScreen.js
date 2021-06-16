@@ -52,6 +52,9 @@ export default function NotesScreen({navigation, route}) {
   // The function to render each row in our FlatList
   function renderItem({item}) {
     return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("View Diary Entry", {item})}
+      >
         <View
           style={styles.flatList}>
           <Text
@@ -64,6 +67,7 @@ export default function NotesScreen({navigation, route}) {
             {item.description}
           </Text>
         </View>
+      </TouchableOpacity>
     );
   }
 
