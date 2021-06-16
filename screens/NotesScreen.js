@@ -69,6 +69,7 @@ export default function NotesScreen({navigation, route}) {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Note down your feelings during quarantine</Text>
       <FlatList
         data={todos}
         renderItem={renderItem}
@@ -80,6 +81,10 @@ export default function NotesScreen({navigation, route}) {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 25,
+    padding: 5,
+  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -90,10 +95,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingBottom: 10,
     color: '#585b7a',
-    fontFamily: 'Campuri Book',
   },
   diaryDescription: {
-    fontSize: 15,
+    fontFamily: 'Campuri Book',
     paddingBottom: 10,
     color: '#585b7a',
   },
