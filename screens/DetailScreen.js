@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  SafeAreaView,
   TextInput,
   TouchableOpacity,
   FlatList,
@@ -82,7 +83,7 @@ export default function DetailsScreen({ route }) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Text style={styles.title}>{formState.title}</Text>
       <Text style={styles.content}>{formState.content}</Text>
       <TouchableOpacity
@@ -143,7 +144,7 @@ export default function DetailsScreen({ route }) {
         />
         <Text style={{ marginBottom: 10 }}>Submit Comment</Text>
       </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -84,6 +84,7 @@ function ForumScreen({ navigation , route}) {
   return (
     <View style={styles.container}>
       {/* <Button onPress={addColor} title="Add Color" /> */}
+      <Text style={styles.header}>Connect with fellow quarantined people!</Text>
       <FlatList
         style={{ width: "90%"}}
         data={posts}
@@ -107,6 +108,10 @@ export default function ForumStack() {
 }
 
 const styles = StyleSheet.create({
+  header: {
+    fontSize: 25,
+    padding: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: '#ffc',
